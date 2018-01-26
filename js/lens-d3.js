@@ -6,7 +6,7 @@
     global.L = {};
 })();
 
-L.showLens = function (containerID, imagePath, lensW, lensH) {
+L.showLens = function (containerID, imagePath, lensW = 300, lensH = 200) {
     // // Ensure needed browser functions exist.
     // Z.Utils.addCrossBrowserPrototypes();
     // Z.Utils.addCrossBrowserMethods();
@@ -15,8 +15,9 @@ L.showLens = function (containerID, imagePath, lensW, lensH) {
     // Declare all global variables in one global object and get web page parameters.
     // Z.Utils.declareGlobals();
     // Z.pageContainerID = containerID;
-    L.lensW = lensW;
-    L.lensH = lensH;
+
+    // L.lensW = lensW;
+    // L.lensH = lensH;
 
     // console.log(" --- lensW: " + L.lensW)
 
@@ -26,9 +27,6 @@ L.showLens = function (containerID, imagePath, lensW, lensH) {
     // // Initialize on content load rather than full page load if supported by browser.
     // Z.Utils.addEventListener(document, "DOMContentLoaded", Z.initialize);
     // Z.Utils.addEventListener(window, "load", Z.initialize);
-
-
-
 
 
     // var lw = lensW; //300; // lens width
@@ -57,13 +55,65 @@ L.showLens = function (containerID, imagePath, lensW, lensH) {
         .attr('transform', 'translate('+margin+','+margin+')');
     */
 
+    // build out svg  
+    // var svg = d3.select("svg")
+    //     .attr("width", w + 2*margin)
+    //     .attr("height", h + 2*margin)
+    //     .append('g')
+    //     .attr('transform', 'translate('+margin+','+margin+')');
+
+    // d3.select("#lens-container")
+    //     .append("svg")
+    //     .attr("width", "100%")
+    //     .attr("height", "100%")
+    //     .attr("viewbox", "0 0 900 1400")
+    //     .attr("xmlns", "http://www.w3.org/2000/svg")
+    //     .attr("xmlns:xlink", "http://www.w3.org/1999/xlink")
+    //     .attr("version", "1.1")
+    //     ;
+
+    // append g and foreground image
+    var svg = d3.select("svg")
+        .append("svg:g")
+        .attr("transform","translate(50,50)")
+        .append("svg:image")
+        .attr("x", 0)
+        .attr("y", 0)
+        .attr("xlink:href", "images/indenture-lens-image.jpg")
+        .attr("width", "900")
+        .attr("height", "1400")
+        ;
+
+    // append forground image
+    // var svg = d3.select("svg g")
+    // d3.select("svg g")
+    //     .append("svg:image")
+    //     .attr("x", 0)
+    //     .attr("y", 0)
+    //     .attr("xlink:href", "images/indenture-lens-image.jpg")
+    //     .attr("width", "900")
+    //     .attr("height", "1400")
+    //     ;
+    
+    // next append background image
+    d3.select("svg g").append("svg:image")
+        .attr("id", "lens-image")
+        .attr("x", 0)
+        .attr("y", 0)
+        .attr("xlink:href", "images/indenture-lens-text.jpg")
+        .attr("width", "900")
+        .attr("height", "1400")
+        ;
+
     // add border - before lens? hmm, may not matter
     d3.select("svg g").append("svg:rect")
         .attr("id", "lens-border")
         .attr('x', lsx)
         .attr('y', lsy)
-        .attr('width', L.lensW)
-        .attr('height', L.lensH)
+        // .attr('width', L.lensW)
+        // .attr('height', L.lensH)
+        .attr('width', lensW)
+        .attr('height', lensH)
         .attr('rx', 15)
         .attr('ry', 15)
         .style("fill-opacity", 0)
@@ -72,6 +122,21 @@ L.showLens = function (containerID, imagePath, lensW, lensH) {
         .style('cursor', 'move')
         .call(drag);
         ;
+
+    /*
+    // background rect -- superceeded by actual image
+    // I think completely obsolete
+    svg.append('svg:rect')
+        .attr('width', w)
+        .attr('height', h)
+        .attr("clip-path", function(d,i) { return "url(#clip)"; })
+        .style("fill", d3.rgb(0, 230, 0))
+        .style("stroke", d3.rgb(0, 0, 0))
+        .call(drag);
+
+        // adding
+        .attr("id", "doc-image")
+    */
 
 
     // add lens clip
@@ -82,8 +147,10 @@ L.showLens = function (containerID, imagePath, lensW, lensH) {
         .attr('y', lsy)
         .attr('rx', 15)
         .attr('ry', 15)
-        .attr('width', L.lensW)
-        .attr('height', L.lensH)
+        // .attr('width', L.lensW)
+        // .attr('height', L.lensH)
+        .attr('width', lensW)
+        .attr('height', lensH)
         ;
 
     /*
@@ -101,20 +168,6 @@ L.showLens = function (containerID, imagePath, lensW, lensH) {
         ;
     */
 
-
-    /*
-    // background rect -- superceeded by actual image
-    svg.append('svg:rect')
-        .attr('width', w)
-        .attr('height', h)
-        .attr("clip-path", function(d,i) { return "url(#clip)"; })
-        .style("fill", d3.rgb(0, 230, 0))
-        .style("stroke", d3.rgb(0, 0, 0))
-        .call(drag);
-
-        // adding
-        .attr("id", "doc-image")
-    */
 
 
     // add lens and drag to foreground image
