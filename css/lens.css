@@ -1,4 +1,4 @@
-#lens-container-class {
+/*#lens-container {
   float: left;
   display: block;
   margin-right: 2.35765%;
@@ -6,6 +6,21 @@
   text-align: center; }
   .doc-area:last-child {
     margin-right: 0; }
+*/  
+  
+#lens-container {
+  width: 75%;
+ }
+
+#lens-containerXX { 
+	display: inline-block;
+	/*position: relative;*/
+	width: 75%;
+	padding-bottom: 100%; 
+	vertical-align: middle; 
+	/*overflow: hidden;*/ 
+}
+
 
 /*#lens-border rect{
 	cursor: move;

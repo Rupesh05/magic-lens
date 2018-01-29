@@ -63,7 +63,8 @@ L.showLens = function (containerID, imagePath, lensW = 300, lensH = 200) {
     //     .attr('transform', 'translate('+margin+','+margin+')');
 
     // hmm, height doesn't work with this, does when hard-wired
-    var container =  d3.select("#lens-container")
+    // var container =  d3.select("#lens-container")
+    d3.select("#lens-container")
         // .append("div")
         // .attr("id", "lens-viewer")
         // .attr("style", "display: inline-block; position: relative; overflow: hidden; width: 100%; height: 100%; left: 0px; top: 0px; border-style: none; border-width: 0px; border-color: rgb(105, 105, 105); background: none transparent; margin: 0px; padding: 0px; white-space: normal; cursor: pointer; user-select: none;")
@@ -73,8 +74,8 @@ L.showLens = function (containerID, imagePath, lensW = 300, lensH = 200) {
         .attr("width", "100%")
         .attr("height", "100%")
         .attr("viewbox", "0 0 900 1400")
-        .attr("xmlns", "http://www.w3.org/2000/svg")
-        .attr("xmlns:xlink", "http://www.w3.org/1999/xlink")
+        // .attr("xmlns", "http://www.w3.org/2000/svg")
+        // .attr("xmlns:xlink", "http://www.w3.org/1999/xlink")
         .attr("version", "1.1")
         ;
 
@@ -90,9 +91,9 @@ L.showLens = function (containerID, imagePath, lensW = 300, lensH = 200) {
         .attr("height", "1400")
         ;
 
-    // append forground image
+    // // append forground image
     // var svg = d3.select("svg g")
-    // d3.select("svg g")
+    // // d3.select("svg g")
     //     .append("svg:image")
     //     .attr("x", 0)
     //     .attr("y", 0)
