@@ -1,12 +1,12 @@
 // magic lens JS
 
-(function () {
-    // Declare global-to-page object to contain global-to-viewer elements.
-    var global = (function () { return this; } ).call();
-    global.L = {};
-})();
+// (function () {
+//     // Declare global-to-page object to contain global-to-viewer elements.
+//     var global = (function () { return this; } ).call();
+//     global.L = {};
+// })();
 
-L.showLens = function (containerID, imagePath, lensW = 300, lensH = 200) {
+// L.showLens = function (containerID, imagePath, lensW = 300, lensH = 200) {
     // // Ensure needed browser functions exist.
     // Z.Utils.addCrossBrowserPrototypes();
     // Z.Utils.addCrossBrowserMethods();
@@ -28,12 +28,18 @@ L.showLens = function (containerID, imagePath, lensW = 300, lensH = 200) {
     // Z.Utils.addEventListener(document, "DOMContentLoaded", Z.initialize);
     // Z.Utils.addEventListener(window, "load", Z.initialize);
 
+    var lensW = 300;
+    var lensH = 200;
+
 
     // var lw = lensW; //300; // lens width
     // var lh = lensH; // 200;
     var lsx = 160; // lens start x
     var lsy = 25; 
 
+
+    var width = 900,
+        height = 1400;
 
     // drag border and clip with it
     var drag = d3.drag()
@@ -46,43 +52,20 @@ L.showLens = function (containerID, imagePath, lensW = 300, lensH = 200) {
             border.attr('y', +border.attr('y') + d3.event.dy);
         });
 
-    /*
-    // build out svg - superceeded by hard-coded element in html  
-    var svg = d3.select("svg")
-        .attr("width", w + 2*margin)
-        .attr("height", h + 2*margin)
-        .append('g')
-        .attr('transform', 'translate('+margin+','+margin+')');
-    */
+    // add padding to container and append svg
+    var lensSvg = d3.select("#lens-container")
+            .attr(
+                "style",
+                "padding-bottom: " + Math.ceil(height * 100 / width) + "%"
+            )
+            .append("svg")
+            .attr("viewBox", "0 0 " + width + " " + height);
 
-    // build out svg  
-    // var svg = d3.select("svg")
-    //     .attr("width", w + 2*margin)
-    //     .attr("height", h + 2*margin)
-    //     .append('g')
-    //     .attr('transform', 'translate('+margin+','+margin+')');
-
-    // hmm, height doesn't work with this, does when hard-wired
-    // var container =  d3.select("#lens-container")
-    d3.select("#lens-container")
-        // .append("div")
-        // .attr("id", "lens-viewer")
-        // .attr("style", "display: inline-block; position: relative; overflow: hidden; width: 100%; height: 100%; left: 0px; top: 0px; border-style: none; border-width: 0px; border-color: rgb(105, 105, 105); background: none transparent; margin: 0px; padding: 0px; white-space: normal; cursor: pointer; user-select: none;")
-        // .style("width", "700")
-        // .style("height", "1200")
-        .append("svg")
-        .attr("width", "100%")
-        .attr("height", "100%")
-        .attr("viewbox", "0 0 900 1400")
-        // .attr("xmlns", "http://www.w3.org/2000/svg")
-        // .attr("xmlns:xlink", "http://www.w3.org/1999/xlink")
-        .attr("version", "1.1")
-        ;
 
     // append g and foreground image
-    var svg = d3.select("#lens-container svg")
-        .append("svg:g")
-        .attr("transform","translate(50,50)")
+    // lensSvg.append("svg:g")
+    lensSvg
+        // .attr("transform","translate(50,50)")
         .append("svg:image")
         .attr("x", 0)
         .attr("y", 0)
@@ -91,19 +74,9 @@ L.showLens = function (containerID, imagePath, lensW = 300, lensH = 200) {
         .attr("height", "1400")
         ;
 
-    // // append forground image
-    // var svg = d3.select("svg g")
-    // // d3.select("svg g")
-    //     .append("svg:image")
-    //     .attr("x", 0)
-    //     .attr("y", 0)
-    //     .attr("xlink:href", "images/indenture-lens-image.jpg")
-    //     .attr("width", "900")
-    //     .attr("height", "1400")
-    //     ;
-    
-    // next append background image
-    d3.select("svg g").append("svg:image")
+    // append background image to existing g
+    // d3.select("svg g").append("svg:image")
+    lensSvg.append("svg:image")
         .attr("id", "lens-image")
         .attr("x", 0)
         .attr("y", 0)
@@ -112,8 +85,9 @@ L.showLens = function (containerID, imagePath, lensW = 300, lensH = 200) {
         .attr("height", "1400")
         ;
 
-    // add border - before lens? hmm, may not matter
-    d3.select("svg g").append("svg:rect")
+    // add border 
+    // d3.select("svg g").append("svg:rect")
+    lensSvg.append("svg:rect")
         .attr("id", "lens-border")
         .attr('x', lsx)
         .attr('y', lsy)
@@ -130,24 +104,9 @@ L.showLens = function (containerID, imagePath, lensW = 300, lensH = 200) {
         .call(drag);
         ;
 
-    /*
-    // background rect -- superceeded by actual image
-    // I think completely obsolete
-    svg.append('svg:rect')
-        .attr('width', w)
-        .attr('height', h)
-        .attr("clip-path", function(d,i) { return "url(#clip)"; })
-        .style("fill", d3.rgb(0, 230, 0))
-        .style("stroke", d3.rgb(0, 0, 0))
-        .call(drag);
-
-        // adding
-        .attr("id", "doc-image")
-    */
-
-
     // add lens clip
-    var clip = d3.select("svg g").append("svg:clipPath")
+    // var clip = d3.select("svg g").append("svg:clipPath")
+    lensSvg.append("svg:clipPath")
         .attr("id", "clip")
         .append("svg:rect")
         .attr('x', lsx)
@@ -160,31 +119,10 @@ L.showLens = function (containerID, imagePath, lensW = 300, lensH = 200) {
         .attr('height', lensH)
         ;
 
-    /*
-    // test adding sizer
-    //var clip = d3.select("svg g").append("svg:clipSizer")
-    d3.select("svg g").append("svg:clipSizer")
-        .attr("id", "sizer")
-        .append("svg:rect")
-        .attr('x', 540)
-        .attr('y', 180)
-        .attr('width', 20)
-        .attr('height', 20)
-        .style("fill", "orange")
-        .style("stroke", "black")
-        ;
-    */
-
-
-
     // add lens and drag to foreground image
     d3.select("#lens-image")
-        .attr("clip-path", function(d,i) { return "url(#clip)"; })
-        // drag now needs to be on border object since that's in the foreground
-        //.call(drag);
-
-
+        .attr("clip-path", function(d,i) { return "url(#clip)"; });
 
     
-};
+// };
 
