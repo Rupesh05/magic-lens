@@ -1,45 +1,15 @@
 // magic lens JS
 
-// (function () {
-//     // Declare global-to-page object to contain global-to-viewer elements.
-//     var global = (function () { return this; } ).call();
-//     global.L = {};
-// })();
+(function () {
+    // Declare global-to-page object to contain global-to-viewer elements.
+    var global = (function () { return this; } ).call();
+    global.L = {};
+})();
 
-// L.showLens = function (containerID, imagePath, lensW = 300, lensH = 200) {
-    // // Ensure needed browser functions exist.
-    // Z.Utils.addCrossBrowserPrototypes();
-    // Z.Utils.addCrossBrowserMethods();
-    // Z.Utils.addCrossBrowserEvents();
+L.showLens = function (containerID, baseImagePath, revealedImagePath, width, height, lensW = 300, lensH = 200) {
 
-    // Declare all global variables in one global object and get web page parameters.
-    // Z.Utils.declareGlobals();
-    // Z.pageContainerID = containerID;
-
-    // L.lensW = lensW;
-    // L.lensH = lensH;
-
-    // console.log(" --- lensW: " + L.lensW)
-
-    // Z.imagePath = Z.Utils.removeExtraSlashCharacters(imagePath);
-    // Z.parameters = Z.Utils.parseParameters(optionalParams);
-
-    // // Initialize on content load rather than full page load if supported by browser.
-    // Z.Utils.addEventListener(document, "DOMContentLoaded", Z.initialize);
-    // Z.Utils.addEventListener(window, "load", Z.initialize);
-
-    var lensW = 300;
-    var lensH = 200;
-
-
-    // var lw = lensW; //300; // lens width
-    // var lh = lensH; // 200;
     var lsx = 160; // lens start x
     var lsy = 25; 
-
-
-    var width = 900,
-        height = 1400;
 
     // drag border and clip with it
     var drag = d3.drag()
@@ -53,7 +23,7 @@
         });
 
     // add padding to container and append svg
-    var lensSvg = d3.select("#lens-container")
+    var lensSvg = d3.select("#" + containerID)
             .attr(
                 "style",
                 "padding-bottom: " + Math.ceil(height * 100 / width) + "%"
@@ -69,9 +39,9 @@
         .append("svg:image")
         .attr("x", 0)
         .attr("y", 0)
-        .attr("xlink:href", "images/indenture-lens-image.jpg")
-        .attr("width", "900")
-        .attr("height", "1400")
+        .attr("xlink:href", baseImagePath)
+        .attr("width", width)
+        .attr("height", height)
         ;
 
     // append background image to existing g
@@ -80,9 +50,9 @@
         .attr("id", "lens-image")
         .attr("x", 0)
         .attr("y", 0)
-        .attr("xlink:href", "images/indenture-lens-text.jpg")
-        .attr("width", "900")
-        .attr("height", "1400")
+        .attr("xlink:href", revealedImagePath)
+        .attr("width", width)
+        .attr("height", height)
         ;
 
     // add border 
@@ -122,7 +92,6 @@
     // add lens and drag to foreground image
     d3.select("#lens-image")
         .attr("clip-path", function(d,i) { return "url(#clip)"; });
-
     
-// };
+};
 

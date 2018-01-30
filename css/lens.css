@@ -15,6 +15,10 @@
     top: 0;
 }
 
+#lens-image {
+    opacity: .8;
+}
+
 .random-div {
 	width: 75%;
 }
