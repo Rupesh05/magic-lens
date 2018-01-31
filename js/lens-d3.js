@@ -6,10 +6,25 @@
     global.L = {};
 })();
 
-L.showLens = function (containerID, baseImagePath, revealedImagePath, width, height, lensW = 300, lensH = 200) {
+L.showLens = function (containerID, baseImagePath, revealedImagePath, width, height, optionalParams) { // lensW = 300, lensH = 200
 
-    var lsx = 160; // lens start x
-    var lsy = 25; 
+    var lensW = 300, lensH = 200;
+    var initX = 160, initY = 25; // lens start x
+
+    // Process optional parameters.
+    if (typeof optionalParams !== 'undefined') {
+        if (typeof optionalParams === 'string') {
+            parameters = parseParameters(optionalParams);
+            console.log(' --- parameters: ' + parameters["startX"]);
+
+            // use these parameters
+            if (parameters["lensW"] !== 'undefined'){ lensW = parameters["lensW"]; }
+            if (parameters["lensH"] !== 'undefined'){ lensH = parameters["lensH"]; }
+            if (parameters["startX"] !== 'undefined'){ initX = parameters["startX"]; }
+            if (parameters["startY"] !== 'undefined'){ initX = parameters["startY"]; }
+        }
+    }
+
 
     // drag border and clip with it
     var drag = d3.drag()
@@ -59,8 +74,8 @@ L.showLens = function (containerID, baseImagePath, revealedImagePath, width, hei
     // d3.select("svg g").append("svg:rect")
     lensSvg.append("svg:rect")
         .attr("id", "lens-border")
-        .attr('x', lsx)
-        .attr('y', lsy)
+        .attr('x', initX)
+        .attr('y', initY)
         // .attr('width', L.lensW)
         // .attr('height', L.lensH)
         .attr('width', lensW)
@@ -79,8 +94,8 @@ L.showLens = function (containerID, baseImagePath, revealedImagePath, width, hei
     lensSvg.append("svg:clipPath")
         .attr("id", "clip")
         .append("svg:rect")
-        .attr('x', lsx)
-        .attr('y', lsy)
+        .attr('x', initX)
+        .attr('y', initY)
         .attr('rx', 15)
         .attr('ry', 15)
         // .attr('width', L.lensW)
@@ -93,5 +108,31 @@ L.showLens = function (containerID, baseImagePath, revealedImagePath, width, hei
     d3.select("#lens-image")
         .attr("clip-path", function(d,i) { return "url(#clip)"; });
     
-};
+}; // end L.showLens
+
+function parseParameters(params) { 
+    var parsedParams = [];
+    if (typeof params === 'object') {
+        parsedParams = params;
+    } else if (typeof params === 'string') {
+        var splitParams = params.split('&');
+        for (var i = 0, j = splitParams.length; i < j; i++) {
+            var nameValuePair = splitParams[i];
+            // console.log(' --- in parseParameters, nameValuePair ' + splitParams[i]);
+            var sep = nameValuePair.indexOf('=');
+            if (sep > 0) {
+                var pName = nameValuePair.substring(0, sep)
+                var pValue = nameValuePair.substring(sep + 1)
+                parsedParams[pName] = pValue;
+            }
+        }
+    }
+    return parsedParams;
+}
+
+// function setParameters(parameters) {
+
+
+// }
+
 
