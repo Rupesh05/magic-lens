@@ -4,35 +4,64 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>test file</title>
+  <title>Magic Lens Documentation</title>
   <link rel="stylesheet" href="https://stackedit.io/style.css" />
 </head>
 
 <body class="stackedit">
   <div class="stackedit__html"><h1 id="magic-lens-documentation">Magic Lens Documentation</h1>
-<p>Start by looking at and the copying the examples.</p>
-<p><a href="example1.html" target="example">Example1</a></p>
-<p><a href="example2.html" target="example">Example2</a></p>
+<p>Start by looking at and the copying the examples.<br>
+<a href="example1.html" target="example">Magic Lens - Example 1</a><br>
+<a href="example2.html" target="example">Magic Lens - Example 2</a></p>
 <ul>
-<li>you need an empty div to contain the lens</li>
+<li>In the header of your HTML you’ll need to call the lens css and the D3 JavaScript library:</li>
 </ul>
-<p>Contents of this package:</p>
+<pre><code>    &lt;link rel="stylesheet" href="css/lens.css" type="text/css"/&gt;
+    &lt;script src="https://d3js.org/d3.v4.min.js"&gt;&lt;/script&gt;
+</code></pre>
+<ul>
+<li>In the body of your HTML you need an empty div to contain the lens</li>
+<li>and you need call to the script using parameters</li>
+</ul>
+<pre><code>    &lt;div id="lens-container"&gt;
+      &lt;!-- Required - will be filled by lens-d3.js --&gt;
+    &lt;/div&gt; 
+    &lt;script src="js/lens-d3.js" type="text/javascript"&gt;&lt;/script&gt;
+    &lt;script type="text/javascript"&gt;
+      showLens("lens-container", "images/indenture-lens-image.jpg", "images/indenture-lens-text.jpg",
+        900, 1400, "startX=160&amp;startY=30");
+    &lt;/script&gt;
+
+</code></pre>
+<h2 id="parameters">Parameters</h2>
+<p>Format:</p>
+<pre><code>showLens( container, baseImagePath, revealedImagePath
+   imageWidth, imageHeight, optionalParemeters)
+</code></pre>
+<p>Parameters that are strings (not numbers) are enclosed in quotes (single or double)<br>
+Optional parameters, as a group, enclosed in quotes/</p>
+<p>Required</p>
+<ul>
+<li>container - name matches empty div (e.g. “lens-container”)</li>
+<li>baseImagePath (e.g. “images/indenture-lens-image.jpg”)</li>
+<li>revealedImagePath (e.g. “images/indenture-lens-text.jpg”)</li>
+<li>imageWidth (e.g.900)</li>
+<li>imageHeight (e.g.1400)</li>
+</ul>
+<p>Optional (separated by &amp;, no spaces)</p>
+<ul>
+<li>startX and startY - the cooridinates of upper left corner of the lens, the default is 50, 50</li>
+<li>lensW and lensH - width and height of the lens if you’d like to change it. The default is 300 x 200</li>
+</ul>
+<h2 id="contents-of-this-package">Contents of this package:</h2>
 <ul>
 <li>index.html – just links to the two examples</li>
 <li>example1.html – Indenture document</li>
 <li>example2.html</li>
-<li>js/lens-d3.js – the code</li>
-<li>js/</li>
-</ul>
-<h2 id="parameters">Parameters</h2>
-<ul>
-<li>L.showLens( container, baseImagePath, revealedImagePath<br>
-imageWidth, imageHeight)</li>
-<li>container name matches empty div (“lens-container”)</li>
-<li>baseImagePath (e.g. “images/indenture-lens-image.jpg”)</li>
-<li>revealedImagePath (e.g. “images/indenture-lens-text.jpg”)</li>
-<li>imageWidth (900)</li>
-<li>imageHeight (1400)</li>
+<li>README.md - copy of this document</li>
+<li>js/lens.js – the code</li>
+<li>js/d3.min.js - an alternate local copy of D3 that can be used for testing if offline.</li>
+<li>css/lens.css -- a few required styles.</li>
 </ul>
 </div>
 </body>
