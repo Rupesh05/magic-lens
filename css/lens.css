@@ -1,3 +1,8 @@
+/* Magic Lens css
+Do not change the following three styles
+(Unless you know more than the auther does!)
+*/
+
 #lens-container {
     position: relative;
     height: 0;
@@ -19,6 +24,11 @@
     opacity: .85;
 }
 
-.random-div {
-	width: 75%;
+/*
+This is a place holder for the styles that might appear in your 
+own design. Should prbably be in a separate css file.
+*/
+
+.yourDivHere {
+	width: 85%;
 }
