@@ -1,28 +1,46 @@
 // magic lens JS
+// var lensW = 300, lensH = 200;
+// var initX = 160, initY = 25; // lens start x
 
-(function () {
-    // Declare global-to-page object to contain global-to-viewer elements.
-    var global = (function () { return this; } ).call();
-    global.L = {};
-})();
-
-L.showLens = function (containerID, baseImagePath, revealedImagePath, width, height, optionalParams) { // lensW = 300, lensH = 200
-
+function showLens (containerID, baseImagePath, revealedImagePath, width, height, optionalParams) { 
     var lensW = 300, lensH = 200;
     var initX = 160, initY = 25; // lens start x
+
 
     // Process optional parameters.
     if (typeof optionalParams !== 'undefined') {
         if (typeof optionalParams === 'string') {
             parameters = parseParameters(optionalParams);
-            console.log(' --- parameters: ' + parameters["startX"]);
+            console.log(' --- parameters - startX: ' + parameters["startX"]);
+            console.log(' --- var before initX: ' + initX);
 
             // use these parameters
-            if (parameters["lensW"] !== 'undefined'){ lensW = parameters["lensW"]; }
+            // if (parameters["lensW"] !== 'undefined'){ 
+            //     console.log(' --- lensW not undefined: ' + parameters["lensW"]);
+            //     lensW = parameters["lensW"]; 
+            // } else {
+            //     console.log(' --- lensW not set- still: ' + lensW);
+            // }
+
+            if ( typeof(parameters["lensW"]) !== 'undefined'){ 
+                console.log(' --- lensW not undefined (aka defined): ' + parameters["lensW"]);
+                lensW = parameters["lensW"]; 
+            } else {
+                console.log(' --- lensW undefined: '+ parameters["lensW"]);
+            }
+
+
+
             if (parameters["lensH"] !== 'undefined'){ lensH = parameters["lensH"]; }
             if (parameters["startX"] !== 'undefined'){ initX = parameters["startX"]; }
-            if (parameters["startY"] !== 'undefined'){ initX = parameters["startY"]; }
+            if (parameters["startY"] !== 'undefined'){ initY = parameters["startY"]; }
+
+            console.log(' --- var after initX: ' + initX);
+        } else {
+            console.log(" -- opt params not string");      
         }
+    } else {
+        console.log(" -- opt params undefined");
     }
 
 
@@ -108,7 +126,7 @@ L.showLens = function (containerID, baseImagePath, revealedImagePath, width, hei
     d3.select("#lens-image")
         .attr("clip-path", function(d,i) { return "url(#clip)"; });
     
-}; // end L.showLens
+} // end showLens
 
 function parseParameters(params) { 
     var parsedParams = [];
@@ -118,7 +136,7 @@ function parseParameters(params) {
         var splitParams = params.split('&');
         for (var i = 0, j = splitParams.length; i < j; i++) {
             var nameValuePair = splitParams[i];
-            // console.log(' --- in parseParameters, nameValuePair ' + splitParams[i]);
+            console.log(' --- in parseParameters, nameValuePair ' + splitParams[i]);
             var sep = nameValuePair.indexOf('=');
             if (sep > 0) {
                 var pName = nameValuePair.substring(0, sep)
@@ -130,9 +148,5 @@ function parseParameters(params) {
     return parsedParams;
 }
 
-// function setParameters(parameters) {
-
-
-// }
 
 
