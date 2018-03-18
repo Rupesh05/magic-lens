@@ -12,7 +12,7 @@ Start by looking at and the copying the examples.
 ```
 
 - In the body of your HTML you need an empty div to contain the lens
-- and you need call to the script using parameters
+- and you need to call the script using parameters
 
 ```
     <div id="lens-container">
@@ -30,7 +30,7 @@ Start by looking at and the copying the examples.
 Format:
 ```
 showLens( container, baseImagePath, revealedImagePath
-   imageWidth, imageHeight, optionalParemeters)
+   imageWidth, imageHeight, optionalParameters)
 ```
 
 Parameters that are strings (not numbers) are enclosed in quotes (single or double)
@@ -43,7 +43,7 @@ Required
 - imageWidth (e.g.900)
 - imageHeight (e.g.1400)
 Optional (separated by &, no spaces)
-- startX and startY - the cooridinates of upper left corner of the lens, the default is 50, 50
+- startX and startY - the coordinates of upper left corner of the lens, the default is 50, 50
 - lensW and lensH - width and height of the lens if you'd like to change it. The default is 300 x 200
 
 ## Contents of this package:
