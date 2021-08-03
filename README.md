@@ -1,3 +1,5 @@
+https://rupesh05.github.io/magic-lens/
+
 # Magic Lens Documentation
 
 Start by looking at and the copying the examples.
